@@ -1,0 +1,1296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ATELIER | Editorial Barbering</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  
+  <style>
+    /* ---------- DESIGN TOKENS ---------- */
+    :root {
+      /* Institutional Neutral Palette */
+      --paper: #f8f7f4;
+      --charcoal: #0f1113;
+      --stone: #e8e6e1;
+      --slate: #6b6d70;
+      --accent: #c4552d; /* Burnt Sienna */
+      
+      /* Strict Container System */
+      --container: 1200px;
+      --gutter: clamp(1.5rem, 4vw, 2.5rem);
+      
+      /* Fluid Typography Scale */
+      --fs-xs: clamp(0.75rem, 0.5rem + 0.5vw, 0.875rem);
+      --fs-sm: clamp(0.875rem, 0.75rem + 0.5vw, 1rem);
+      --fs-base: clamp(1rem, 0.9rem + 0.5vw, 1.125rem);
+      --fs-md: clamp(1.25rem, 1.1rem + 0.75vw, 1.5rem);
+      --fs-lg: clamp(1.75rem, 1.5rem + 1vw, 2.25rem);
+      --fs-xl: clamp(2.5rem, 2rem + 2vw, 3.5rem);
+      --fs-xxl: clamp(3rem, 2.5rem + 2.5vw, 5rem);
+      
+      /* Elevation */
+      --shadow-subtle: 0 12px 40px rgba(15, 17, 19, 0.08);
+      --shadow-medium: 0 24px 60px rgba(15, 17, 19, 0.12);
+      --shadow-strong: 0 36px 80px rgba(15, 17, 19, 0.16);
+      
+      /* Transitions */
+      --transition-smooth: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      --transition-brisk: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* ---------- RESET & BASE ---------- */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--paper);
+      color: var(--charcoal);
+      line-height: 1.6;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* ---------- STRICT 1200px CONTAINER ---------- */
+    .container {
+      width: 100%;
+      max-width: var(--container);
+      margin: 0 auto;
+      padding: 0 var(--gutter);
+    }
+
+    /* ---------- GEOMETRIC BACKGROUND ELEMENTS ---------- */
+    .bg-geometry {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: -2;
+    }
+
+    .bg-circle {
+      position: absolute;
+      border-radius: 50%;
+      background: linear-gradient(135deg, rgba(196, 85, 45, 0.03) 0%, transparent 70%);
+    }
+
+    .circle-1 {
+      width: 400px;
+      height: 400px;
+      top: -100px;
+      right: -100px;
+    }
+
+    .circle-2 {
+      width: 280px;
+      height: 280px;
+      bottom: 10%;
+      left: -80px;
+      background: linear-gradient(135deg, rgba(15, 17, 19, 0.02) 0%, transparent 70%);
+    }
+
+    .bg-square {
+      position: absolute;
+      width: 180px;
+      height: 180px;
+      top: 40%;
+      right: 5%;
+      border: 1px solid rgba(15, 17, 19, 0.03);
+      transform: rotate(15deg);
+    }
+
+    /* ---------- NAVIGATION (Fixed with all links) ---------- */
+    .nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 1000;
+      background: rgba(248, 247, 244, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(15, 17, 19, 0.04);
+      transition: all var(--transition-smooth);
+    }
+
+    .nav.scrolled {
+      background: rgba(248, 247, 244, 0.98);
+      box-shadow: 0 4px 30px rgba(15, 17, 19, 0.04);
+    }
+
+    .nav-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 88px;
+    }
+
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: var(--fs-md);
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--charcoal);
+      text-decoration: none;
+      position: relative;
+    }
+
+    .logo::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 24px;
+      height: 1px;
+      background-color: var(--accent);
+      transition: width var(--transition-smooth);
+    }
+
+    .logo:hover::after {
+      width: 100%;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: clamp(2rem, 3vw, 3rem);
+      align-items: center;
+    }
+
+    .nav-link {
+      font-size: var(--fs-xs);
+      font-weight: 500;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--slate);
+      text-decoration: none;
+      position: relative;
+      padding: 0.5rem 0;
+      transition: color var(--transition-brisk);
+    }
+
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background-color: var(--accent);
+      transition: width var(--transition-smooth);
+    }
+
+    .nav-link:hover {
+      color: var(--charcoal);
+    }
+
+    .nav-link:hover::after {
+      width: 100%;
+    }
+
+    /* Navigation Book Now Button */
+    .nav-cta {
+      padding: 0.75rem 1.75rem;
+      background: var(--charcoal);
+      color: var(--paper);
+      font-size: var(--fs-xs);
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      text-decoration: none;
+      border: 1px solid var(--charcoal);
+      transition: all var(--transition-smooth);
+      margin-left: 1rem;
+    }
+
+    .nav-cta:hover {
+      background: transparent;
+      color: var(--charcoal);
+    }
+
+    /* Mobile Menu Toggle */
+    .menu-toggle {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      width: 24px;
+      height: 24px;
+      position: relative;
+    }
+
+    .menu-toggle span {
+      display: block;
+      width: 100%;
+      height: 2px;
+      background-color: var(--charcoal);
+      position: absolute;
+      left: 0;
+      transition: all var(--transition-smooth);
+    }
+
+    .menu-toggle span:nth-child(1) { top: 5px; }
+    .menu-toggle span:nth-child(2) { top: 11px; }
+    .menu-toggle span:nth-child(3) { top: 17px; }
+
+    /* ---------- ABOUT SECTION (New Section) ---------- */
+    .about {
+      padding: 140px 0;
+      position: relative;
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(3rem, 5vw, 5rem);
+      align-items: start;
+    }
+
+    .about-visual {
+      position: relative;
+      height: 500px;
+    }
+
+    .about-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      clip-path: polygon(8% 0, 100% 0, 100% 92%, 0% 100%);
+      transition: clip-path var(--transition-smooth);
+    }
+
+    .about-visual:hover .about-img {
+      clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
+    }
+
+    .about-badge {
+      position: absolute;
+      bottom: -1.5rem;
+      right: -1.5rem;
+      background: var(--accent);
+      color: var(--paper);
+      padding: 1.5rem;
+      font-size: var(--fs-xs);
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      transform: rotate(3deg);
+      box-shadow: var(--shadow-medium);
+    }
+
+    .about-content {
+      position: relative;
+    }
+
+    .section-tag {
+      display: inline-block;
+      font-size: var(--fs-xs);
+      font-weight: 600;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1.5rem;
+      position: relative;
+      padding-left: 1.5rem;
+    }
+
+    .section-tag::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 50%;
+      width: 1rem;
+      height: 1px;
+      background-color: var(--accent);
+    }
+
+    .about-title {
+      font-family: 'Playfair Display', serif;
+      font-size: var(--fs-xl);
+      font-weight: 400;
+      line-height: 1.1;
+      margin-bottom: 2rem;
+    }
+
+    .about-text {
+      font-size: var(--fs-base);
+      color: var(--slate);
+      line-height: 1.7;
+      margin-bottom: 2rem;
+    }
+
+    .about-quote {
+      font-family: 'Playfair Display', serif;
+      font-size: var(--fs-lg);
+      font-style: italic;
+      color: var(--charcoal);
+      border-left: 3px solid var(--accent);
+      padding-left: 2rem;
+      margin: 2rem 0;
+      line-height: 1.4;
+    }
+    
+      /* ---------- HERO SECTION ---------- */
+    .hero {
+      padding: 180px 0 140px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: clamp(3rem, 5vw, 5rem);
+      align-items: center;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-title {
+      font-family: 'Playfair Display', serif;
+      font-size: var(--fs-xxl);
+      font-weight: 400;
+      line-height: 1.05;
+      margin-bottom: 1.5rem;
+      position: relative;
+    }
+
+    .hero-title em {
+      font-style: italic;
+      color: var(--accent);
+      font-weight: 400;
+    }
+
+    .hero-subtitle {
+      font-size: var(--fs-md);
+      color: var(--slate);
+      max-width: 36ch;
+      margin-bottom: 2.5rem;
+      line-height: 1.6;
+    }
+
+    /* Hero Visual with Asymmetric Depth */
+    .hero-visual {
+      position: relative;
+      height: 600px;
+    }
+
+    .hero-img-container {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      clip-path: polygon(0 0, 100% 8%, 100% 100%, 8% 100%);
+      transition: all var(--transition-smooth);
+    }
+
+    .hero-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .hero-img-container:hover {
+      clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+    }
+
+    .hero-img-container:hover .hero-img {
+      transform: scale(1.05);
+    }
+
+    .hero-overlay {
+      position: absolute;
+      bottom: -2rem;
+      right: -2rem;
+      width: 60%;
+      background: var(--paper);
+      padding: 2rem;
+      box-shadow: var(--shadow-medium);
+      z-index: 3;
+      transform: translateY(20px);
+      opacity: 0;
+      transition: all var(--transition-smooth);
+    }
+
+    .hero-img-container:hover + .hero-overlay {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    /* ---------- SERVICES SECTION ---------- */
+    .services {
+      padding: 140px 0;
+      position: relative;
+    }
+
+    .section-header {
+      margin-bottom: 4rem;
+      position: relative;
+    }
+
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: var(--fs-xl);
+      font-weight: 400;
+      line-height: 1.1;
+      margin-bottom: 1rem;
+    }
+
+    .section-subtitle {
+      font-size: var(--fs-base);
+      color: var(--slate);
+      max-width: 48ch;
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    .service-card {
+      background: var(--paper);
+      padding: 3rem 2.5rem;
+      position: relative;
+      border: 1px solid rgba(15, 17, 19, 0.05);
+      transition: all var(--transition-smooth);
+      overflow: hidden;
+    }
+
+    .service-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, transparent 0%, rgba(15, 17, 19, 0) 100%);
+      transition: all var(--transition-smooth);
+      z-index: 1;
+    }
+
+    .service-card:hover {
+      transform: translateY(-12px);
+      box-shadow: var(--shadow-strong);
+      border-color: transparent;
+    }
+
+    .service-card:hover::before {
+      background: linear-gradient(135deg, var(--charcoal) 0%, rgba(15, 17, 19, 0.95) 100%);
+    }
+
+    .service-card:hover .service-content {
+      color: var(--paper);
+    }
+
+    .service-card:hover .service-duration,
+    .service-card:hover .service-price {
+      color: var(--accent);
+    }
+
+    .service-content {
+      position: relative;
+      z-index: 2;
+      transition: color var(--transition-smooth);
+    }
+
+    .service-name {
+      font-family: 'Playfair Display', serif;
+      font-size: var(--fs-lg);
+      font-weight: 400;
+      margin-bottom: 1rem;
+      line-height: 1.2;
+    }
+
+    .service-description {
+      font-size: var(--fs-sm);
+      color: var(--slate);
+      margin-bottom: 2rem;
+      line-height: 1.6;
+      transition: color var(--transition-smooth);
+    }
+
+    .service-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid rgba(15, 17, 19, 0.08);
+      padding-top: 1.5rem;
+      transition: border-color var(--transition-smooth);
+    }
+
+    .service-card:hover .service-footer {
+      border-color: rgba(248, 247, 244, 0.15);
+    }
+
+    .service-duration {
+      font-size: var(--fs-xs);
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--slate);
+      transition: color var(--transition-smooth);
+    }
+
+    .service-price {
+      font-family: 'Playfair Display', serif;
+      font-size: var(--fs-lg);
+      font-weight: 400;
+      color: var(--charcoal);
+      transition: color var(--transition-smooth);
+    }
+
+    /* ---------- BOOKING SECTION ---------- */
+    .booking {
+      padding: 140px 0;
+      position: relative;
+    }
+
+    .booking-card {
+      background: var(--charcoal);
+      color: var(--paper);
+      padding: 6rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .booking-card::before {
+      content: '';
+      position: absolute;
+      top: -100px;
+      right: -100px;
+      width: 300px;
+      height: 300px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(196, 85, 45, 0.1) 0%, transparent 70%);
+    }
+
+    .booking-title {
+      font-family: 'Playfair Display', serif;
+      font-size: var(--fs-xl);
+      font-weight: 400;
+      margin-bottom: 1.5rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    .booking-subtitle {
+      font-size: var(--fs-base);
+      color: rgba(248, 247, 244, 0.7);
+      max-width: 48ch;
+      margin: 0 auto 3rem;
+      line-height: 1.6;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* ---------- CONTACT SECTION (New Section) ---------- */
+    .contact {
+      padding: 120px 0;
+      background: var(--stone);
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(3rem, 5vw, 5rem);
+    }
+
+    .contact-info {
+      padding-right: 2rem;
+    }
+
+    .contact-method {
+      margin-bottom: 2.5rem;
+    }
+
+    .contact-label {
+      font-size: var(--fs-xs);
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.5rem;
+      display: block;
+    }
+
+    .contact-value {
+      font-size: var(--fs-base);
+      color: var(--charcoal);
+      text-decoration: none;
+      transition: color var(--transition-brisk);
+    }
+
+    .contact-value:hover {
+      color: var(--accent);
+    }
+
+    .contact-hours {
+      margin-top: 3rem;
+    }
+
+    .hours-list {
+      list-style: none;
+    }
+
+    .hours-list li {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.75rem 0;
+      border-bottom: 1px solid rgba(15, 17, 19, 0.05);
+      font-size: var(--fs-sm);
+    }
+
+    .contact-form {
+      background: var(--paper);
+      padding: 3rem;
+      box-shadow: var(--shadow-subtle);
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-label {
+      display: block;
+      font-size: var(--fs-xs);
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+      color: var(--charcoal);
+    }
+
+    .form-input,
+    .form-textarea {
+      width: 100%;
+      padding: 0.75rem;
+      border: 1px solid rgba(15, 17, 19, 0.1);
+      background: transparent;
+      font-family: 'Inter', sans-serif;
+      font-size: var(--fs-base);
+      color: var(--charcoal);
+      transition: border-color var(--transition-brisk);
+    }
+
+    .form-input:focus,
+    .form-textarea:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+
+    .form-textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    /* ---------- BUTTONS ---------- */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.25rem 2.5rem;
+      font-size: var(--fs-xs);
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      text-decoration: none;
+      border: 1px solid var(--charcoal);
+      background: var(--charcoal);
+      color: var(--paper);
+      cursor: pointer;
+      transition: all var(--transition-smooth);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      border-radius: 50%;
+      background: var(--paper);
+      transform: translate(-50%, -50%);
+      transition: width 0.6s, height 0.6s;
+    }
+
+    .btn:hover {
+      color: var(--charcoal);
+      border-color: var(--charcoal);
+    }
+
+    .btn:hover::before {
+      width: 300px;
+      height: 300px;
+    }
+
+    .btn span {
+      position: relative;
+      z-index: 2;
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--charcoal);
+    }
+
+    .btn-outline:hover {
+      color: var(--paper);
+    }
+
+    .btn-outline::before {
+      background: var(--charcoal);
+    }
+
+    /* ---------- FOOTER ---------- */
+    .footer {
+      background: var(--charcoal);
+      color: var(--paper);
+      padding: 100px 0 60px;
+      position: relative;
+    }
+
+    .footer::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 10%;
+      width: 80px;
+      height: 80px;
+      background: var(--accent);
+      transform: translateY(-50%) rotate(45deg);
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 4rem;
+      margin-bottom: 4rem;
+    }
+
+    .footer-brand .logo {
+      color: var(--paper);
+      margin-bottom: 1.5rem;
+    }
+
+    .footer-brand .logo::after {
+      background-color: var(--accent);
+    }
+
+    .footer-tagline {
+      font-size: var(--fs-base);
+      color: rgba(248, 247, 244, 0.6);
+      max-width: 36ch;
+      line-height: 1.6;
+    }
+
+    .footer-heading {
+      font-size: var(--fs-xs);
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1.5rem;
+      display: block;
+    }
+
+    .footer-links {
+      list-style: none;
+    }
+
+    .footer-link {
+      margin-bottom: 0.75rem;
+    }
+
+    .footer-link a {
+      color: rgba(248, 247, 244, 0.7);
+      text-decoration: none;
+      font-size: var(--fs-sm);
+      transition: color var(--transition-brisk);
+      position: relative;
+      padding-left: 0;
+      transition: padding-left var(--transition-smooth);
+    }
+
+    .footer-link a:hover {
+      color: var(--paper);
+      padding-left: 0.5rem;
+    }
+
+    .footer-link a::before {
+      content: '—';
+      position: absolute;
+      left: -0.5rem;
+      opacity: 0;
+      transition: opacity var(--transition-smooth), left var(--transition-smooth);
+    }
+
+    .footer-link a:hover::before {
+      opacity: 1;
+      left: 0;
+    }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(248, 247, 244, 0.08);
+      padding-top: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: var(--fs-xs);
+      color: rgba(248, 247, 244, 0.4);
+    }
+/* ---------- RESPONSIVE DESIGN ---------- */
+    @media (max-width: 1024px) {
+      .hero-grid {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+      }
+      
+      .hero-visual {
+        height: 500px;
+        order: -1;
+      }
+      
+      .services-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      
+      .about-grid,
+      .contact-grid {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+      }
+      
+      .booking-card {
+        padding: 4rem 2rem;
+      }
+      
+      .footer-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 3rem;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .nav-container {
+        height: 72px;
+      }
+      
+      .nav-links {
+        position: fixed;
+        top: 72px;
+        left: 0;
+        width: 100%;
+        background: var(--paper);
+        flex-direction: column;
+        padding: 2rem;
+        box-shadow: var(--shadow-medium);
+        transform: translateY(-100%);
+        opacity: 0;
+        visibility: hidden;
+        transition: all var(--transition-smooth);
+      }
+      
+      .nav-links.active {
+        transform: translateY(0);
+        opacity: 1;
+        visibility: visible;
+      }
+      
+      .menu-toggle {
+        display: block;
+      }
+      
+      .nav-cta {
+        margin-left: 0;
+        margin-top: 1rem;
+      }
+      
+      .hero {
+        padding: 140px 0 100px;
+      }
+      
+      .services,
+      .booking,
+      .about {
+        padding: 100px 0;
+      }
+      
+      .services-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .booking-title {
+        font-size: var(--fs-lg);
+      }
+      
+      .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+      }
+      
+      .footer {
+        padding: 80px 0 40px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero-title {
+        font-size: var(--fs-xl);
+      }
+      
+      .hero-visual {
+        height: 400px;
+      }
+      
+      .service-card {
+        padding: 2.5rem 2rem;
+      }
+      
+      .about-badge {
+        position: relative;
+        bottom: 0;
+        right: 0;
+        margin-top: 2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Geometric Background Elements -->
+  <div class="bg-geometry">
+    <div class="bg-circle circle-1"></div>
+    <div class="bg-circle circle-2"></div>
+    <div class="bg-square"></div>
+  </div>
+
+  <!-- Navigation with all links -->
+  <nav class="nav" id="nav">
+    <div class="container nav-container">
+      <a href="#" class="logo">ATELIER</a>
+      
+      <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      
+      <div class="nav-links" id="navLinks">
+        <a href="#home" class="nav-link">Home</a>
+        <a href="#about" class="nav-link">About</a>
+        <a href="#services" class="nav-link">Services</a>
+        <a href="#booking" class="nav-link">Book</a>
+        <a href="#contact" class="nav-link">Contact</a>
+        <a href="https://booksy.com" target="_blank" class="nav-cta">Book Now</a>
+      </div>
+    </div>
+  </nav>
+  
+   <!-- Hero Section -->
+  <header id="home" class="hero">
+    <div class="container">
+      <div class="hero-grid">
+        <div class="hero-content">
+          <span class="section-tag">Discipline & Craft</span>
+          <h1 class="hero-title">
+            Grooming,<br>
+            <em>Standardized.</em>
+          </h1>
+          <p class="hero-subtitle">
+            A quiet practice of proportion and intent. Built for those who operate with discipline, consistency, and architectural precision.
+          </p>
+          <a href="#services" class="btn">
+            <span>View Sessions</span>
+          </a>
+        </div>
+        <div class="hero-visual">
+          <div class="hero-img-container">
+            <img src="https://images.unsplash.com/photo-1599351431202-1e0f0137899a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80" alt="Barbering Precision" class="hero-img">
+          </div>
+          <div class="hero-overlay">
+            <p style="font-size: var(--fs-sm); color: var(--slate);">
+              Monograph Series No. 01 — The structural study of form and function in traditional barbering.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- About Section -->
+  <section id="about" class="about">
+    <div class="container">
+      <div class="about-grid">
+        <div class="about-visual">
+          <img src="https://images.unsplash.com/photo-1560066984-138dadb4c035?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="ATELIER Studio" class="about-img">
+          <div class="about-badge">Since 2018</div>
+        </div>
+        <div class="about-content">
+          <span class="section-tag">Our Philosophy</span>
+          <h2 class="about-title">Architecture<br>of Grooming</h2>
+          <p class="about-text">
+            ATELIER was founded on the principle that grooming is an architectural discipline. We approach each cut as a structural study, working with the natural geometry of your features rather than against them.
+          </p>
+          <p class="about-text">
+            Our barbers are trained in proportion, balance, and material integrity. We believe that precision is not a style—it's a requirement.
+          </p>
+          <blockquote class="about-quote">
+            "The difference is in the discipline."
+          </blockquote>
+        </div>
+      </div>
+    </div>
+  </section>
+<!-- Services Section -->
+  <section id="services" class="services">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Service Sessions</span>
+        <h2 class="section-title">Architectural<br>Grooming</h2>
+        <p class="section-subtitle">
+          Each session is structured around proportion, balance, and material integrity. We work with the architecture of your features.
+        </p>
+      </div>
+      <div class="services-grid">
+        <article class="service-card">
+          <div class="service-content">
+            <h3 class="service-name">Signature Cut</h3>
+            <p class="service-description">
+              Structural tapering designed around cranial anatomy. Includes precision detailing and final styling with architectural intent.
+            </p>
+            <div class="service-footer">
+              <span class="service-duration">45 MIN</span>
+              <span class="service-price">$35</span>
+            </div>
+          </div>
+        </article>
+        <article class="service-card">
+          <div class="service-content">
+            <h3 class="service-name">Architectural Beard</h3>
+            <p class="service-description">
+              Line work refinement, volume control, and hot towel finish for the disciplined profile. Geometric precision.
+            </p>
+            <div class="service-footer">
+              <span class="service-duration">25 MIN</span>
+              <span class="service-price">$25</span>
+            </div>
+          </div>
+        </article>
+        <article class="service-card">
+          <div class="service-content">
+            <h3 class="service-name">The Full Atelier</h3>
+            <p class="service-description">
+              A comprehensive session combining our signature cut and architectural beard refinement. The complete architectural study.
+            </p>
+            <div class="service-footer">
+              <span class="service-duration">70 MIN</span>
+              <span class="service-price">$55</span>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Booking Section -->
+  <section id="booking" class="booking">
+    <div class="container">
+      <div class="booking-card">
+        <h3 class="booking-title">Book a Session</h3>
+        <p class="booking-subtitle">
+          Appointments only. We operate on a strict reservation system to ensure focused, uninterrupted sessions. Scheduling is handled via our booking partner.
+        </p>
+        <a href="https://booksy.com" target="_blank" class="btn btn-outline">
+          <span>Continue to Booksy</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact" class="contact">
+    <div class="container">
+      <div class="contact-grid">
+        <div class="contact-info">
+          <span class="section-tag">Contact</span>
+          <h2 class="about-title">Visit<br>Our Studio</h2>
+          
+          <div class="contact-method">
+            <span class="contact-label">Address</span>
+            <a href="https://maps.google.com" target="_blank" class="contact-value">
+              123 Architectural Ave<br>
+              Design District, NY 10001
+            </a>
+          </div>
+          
+          <div class="contact-method">
+            <span class="contact-label">Email</span>
+            <a href="mailto:hello@atelierbarber.com" class="contact-value">hello@atelierbarber.com</a>
+          </div>
+          
+          <div class="contact-method">
+            <span class="contact-label">Phone</span>
+            <a href="tel:+12125551234" class="contact-value">+1 (212) 555-1234</a>
+          </div>
+          
+          <div class="contact-hours">
+            <span class="contact-label">Hours</span>
+            <ul class="hours-list">
+              <li><span>Monday - Friday</span><span>10am - 8pm</span></li>
+              <li><span>Saturday</span><span>9am - 6pm</span></li>
+              <li><span>Sunday</span><span>By Appointment</span></li>
+            </ul>
+          </div>
+        </div>
+        
+        <div class="contact-form">
+          <form id="contactForm">
+            <div class="form-group">
+              <label class="form-label" for="name">Name</label>
+              <input type="text" id="name" class="form-input" required>
+            </div>
+            
+            <div class="form-group">
+              <label class="form-label" for="email">Email</label>
+              <input type="email" id="email" class="form-input" required>
+            </div>
+            
+            <div class="form-group">
+              <label class="form-label" for="message">Message</label>
+              <textarea id="message" class="form-textarea" placeholder="Tell us about your grooming needs..."></textarea>
+            </div>
+            
+            <button type="submit" class="btn" style="width: 100%;">
+              <span>Send Message</span>
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="#" class="logo">ATELIER</a>
+          <p class="footer-tagline">
+            A quiet practice of proportion and craft. Built for the professional who operates with discipline and intent.
+          </p>
+        </div>
+        <div>
+          <span class="footer-heading">Studio</span>
+          <ul class="footer-links">
+            <li class="footer-link"><a href="#home">Home</a></li>
+            <li class="footer-link"><a href="#about">About</a></li>
+            <li class="footer-link"><a href="#services">Services</a></li>
+            <li class="footer-link"><a href="#booking">Book</a></li>
+            <li class="footer-link"><a href="#contact">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <span class="footer-heading">Legal</span>
+          <ul class="footer-links">
+            <li class="footer-link"><a href="#">Privacy Policy</a></li>
+            <li class="footer-link"><a href="#">Terms of Service</a></li>
+            <li class="footer-link"><a href="#">Accessibility</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2026 ATELIER BARBERING STUDIO. ALL RIGHTS RESERVED.</p>
+        <p>STRICTLY DISCIPLINED.</p>
+      </div>
+    </div>
+  </footer>
+  
+  <script>
+    // Navigation scroll effect
+    window.addEventListener('scroll', function() {
+      const nav = document.getElementById('nav');
+      if (window.scrollY > 50) {
+        nav.classList.add('scrolled');
+      } else {
+        nav.classList.remove('scrolled');
+      }
+    });
+
+    // Mobile menu toggle
+    const menuToggle = document.getElementById('menuToggle');
+    const navLinks = document.getElementById('navLinks');
+    
+    menuToggle.addEventListener('click', function() {
+      navLinks.classList.toggle('active');
+      
+      // Animate hamburger to X
+      const spans = menuToggle.querySelectorAll('span');
+      if (navLinks.classList.contains('active')) {
+        spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
+        spans[1].style.opacity = '0';
+        spans[2].style.transform = 'rotate(-45deg) translate(7px, -6px)';
+      } else {
+        spans[0].style.transform = 'none';
+        spans[1].style.opacity = '1';
+        spans[2].style.transform = 'none';
+      }
+    });
+
+    // Close mobile menu when clicking a link
+    document.querySelectorAll('.nav-link').forEach(link => {
+      link.addEventListener('click', () => {
+        navLinks.classList.remove('active');
+        const spans = menuToggle.querySelectorAll('span');
+        spans[0].style.transform = 'none';
+        spans[1].style.opacity = '1';
+        spans[2].style.transform = 'none';
+      });
+    });
+
+    // Smooth scroll for navigation links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        
+        const targetId = this.getAttribute('href');
+        if (targetId === '#') return;
+        
+        const targetElement = document.querySelector(targetId);
+        if (targetElement) {
+          window.scrollTo({
+            top: targetElement.offsetTop - 80,
+            behavior: 'smooth'
+          });
+        }
+      });
+    });
+
+    // Simple contact form submission
+    document.getElementById('contactForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      alert('Thank you for your message. We will respond within 24 hours.');
+      this.reset();
+    });
+  </script>
+</body>
+</html>
+  
